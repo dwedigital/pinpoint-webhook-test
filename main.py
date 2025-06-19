@@ -3,12 +3,19 @@ This is a test application to receive webhooks from Pinpoint.
 """
 
 import logging
+import os
 import subprocess
 import sys
 
+import dotenv
 from flask import Flask, abort, render_template, request
 
 from verification import is_verified_request
+
+dotenv.load_dotenv()
+
+NGROK_URL = os.getenv("NGROK_URL")
+PORT = "8000"
 
 logging.basicConfig(
     level=logging.INFO,
@@ -49,13 +56,14 @@ def webhook(client):
 
 if __name__ == "__main__":
     gunicorn_process = subprocess.Popen(
-        ["gunicorn", "main:app", "--bind", "0.0.0.0:8000"],
-        text=True,
+        ["gunicorn", "main:app", "--bind", f"0.0.0.0:{PORT}"]
     )
-    ngrok_process = subprocess.Popen(
-        ["ngrok", "http", "8000"],
-        text=True,
+    ngrok_command = (
+        ["ngrok", "http", f"--url={NGROK_URL}", f"{PORT}"]
+        if NGROK_URL
+        else ["ngrok", "http", f"{PORT}"]
     )
+    ngrok_process = subprocess.Popen(ngrok_command, text=True)
 
     try:
         gunicorn_process.wait()
