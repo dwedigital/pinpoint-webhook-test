@@ -1,6 +1,6 @@
 # Webhook Testing App
 
-This is a simple flask app that demonstrates how to correcly implement webhook signing validation
+This is a simple flask app that demonstrates how to implement webhook signing validation as well as being able to generally test webhooks without checking verifiction
 
 ## Set Up
 * Within a working directory create a python virtual env by running `python3 -m venv .venv`
