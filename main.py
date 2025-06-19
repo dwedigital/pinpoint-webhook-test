@@ -35,22 +35,34 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/webhook/<client>", methods=["POST"])
-def webhook(client):
+@app.route("/signed_webhook/<client>", methods=["POST"])
+def signed_webhook(client):
     """
-    This is the webhook endpoint for the client.
+    Route for testing signing and verification of webhooks
     """
     event_type = request.json.get("event")
     if not is_verified_request(request):
         logger.error(
-            "Invalid HMAC signature for client: %s event: %s", client, event_type
+            "SIGNED | Invalid HMAC signature | client: %s | event: %s",
+            client,
+            event_type,
         )
         abort(401, description="Invalid HMAC signature")
 
     # Proceed with your logic
     logger.info(
-        "Webhook received & verified for client: %s event: %s", client, event_type
+        "SIGNED | client: %s | event: %s",
+        client,
+        event_type,
     )
+    return "Verified!", 200
+
+
+@app.route("/unsigned_webhook/<client>", methods=["POST"])
+def unsigned_webhook(client):
+    """Route for testing unsigned webhook events"""
+    event_type = request.json.get("event")
+    logger.info("UNSIGNED | client: %s | event: %s", client, event_type)
     return "Verified!", 200
 
 
