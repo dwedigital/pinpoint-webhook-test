@@ -3,6 +3,8 @@ This is a test application to receive webhooks from Pinpoint.
 """
 
 import logging
+import subprocess
+import sys
 
 from flask import Flask, abort, render_template, request
 
@@ -46,4 +48,19 @@ def webhook(client):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    gunicorn_process = subprocess.Popen(
+        ["gunicorn", "main:app", "--bind", "0.0.0.0:8000"],
+        text=True,
+    )
+    ngrok_process = subprocess.Popen(
+        ["ngrok", "http", "8000"],
+        text=True,
+    )
+
+    try:
+        gunicorn_process.wait()
+        ngrok_process.terminate()
+    except KeyboardInterrupt:
+        gunicorn_process.terminate()
+        ngrok_process.terminate()
+        sys.exit(0)

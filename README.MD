@@ -16,6 +16,9 @@ This is a simple flask app that demonstrates how to correcly implement webhook s
 * Update the signig secret env variable in `.env`
 * Test the webhook in Pinpoint (scroll to the bottom of the webhook page)
 
+*if you already have ngrok and Gunicorn installed*
+run: `python3 main.py` - this will run both the gunicorn command and ngrok command
+
 A file called `app.log` will be created on fisrt load of flask and this will also contain additional confirmation and time stamps of the status of webhook validations
 
 
