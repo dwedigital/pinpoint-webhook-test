@@ -1,4 +1,4 @@
-# Pinpoint Webhook Verification Example
+# Webhook Testing App
 
 This is a simple flask app that demonstrates how to correcly implement webhook signing validation
 

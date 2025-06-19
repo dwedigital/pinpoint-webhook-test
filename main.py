@@ -1,5 +1,5 @@
 """
-This is a test application to receive webhooks from Pinpoint.
+This is a test application to receive webhooks and optionally verify them.
 """
 
 import logging
