@@ -16,6 +16,6 @@ This is a simple flask app that demonstrates how to correcly implement webhook s
 * Update the signig secret env variable in `.env`
 * Test the webhook in Pinpoint (scroll to the bottom of the webhook page)
 
-A file called `app.log` will be created on firt load of flask and this will also contain additional confirmation and time stamps of the status of webhook validations
+A file called `app.log` will be created on fisrt load of flask and this will also contain additional confirmation and time stamps of the status of webhook validations
 
 
