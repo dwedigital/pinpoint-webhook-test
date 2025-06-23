@@ -6,9 +6,10 @@ import logging
 import os
 import subprocess
 import sys
+from parser import parse_logs
 
 import dotenv
-from flask import Flask, abort, render_template, request
+from flask import Flask, abort, jsonify, render_template, request
 
 from verification import is_verified_request
 
@@ -64,6 +65,24 @@ def unsigned_webhook(client):
     event_type = request.json.get("event")
     logger.info("UNSIGNED | client: %s | event: %s", client, event_type)
     return "Verified!", 200
+
+
+@app.route("/logs", methods=["GET"])
+def get_logs():
+    client_filter = request.args.get("client")
+    event_filter = request.args.get("event")
+    level_filter = request.args.get("level")
+
+    logs = parse_logs()
+
+    if client_filter:
+        logs = [log for log in logs if log["client"] == client_filter]
+    if event_filter:
+        logs = [log for log in logs if log["event"] == event_filter]
+    if level_filter:
+        logs = [log for log in logs if log["level"] == level_filter]
+
+    return jsonify({"data": logs})
 
 
 if __name__ == "__main__":
