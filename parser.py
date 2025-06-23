@@ -24,4 +24,6 @@ def parse_logs():
                     data["timestamp"], "%Y-%m-%d %H:%M:%S,%f"
                 ).isoformat()
                 parsed_logs.append(data)
+
+    parsed_logs.sort(key=lambda x: x["timestamp"], reverse=True)
     return parsed_logs
