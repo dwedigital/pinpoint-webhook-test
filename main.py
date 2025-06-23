@@ -20,7 +20,7 @@ PORT = "8000"
 
 logging.basicConfig(
     level=logging.INFO,
-    filename="app.log",
+    filename="data/app.log",
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)

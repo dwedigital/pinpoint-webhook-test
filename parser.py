@@ -1,7 +1,7 @@
 import re
 from datetime import datetime
 
-LOG_FILE = "app.log"
+LOG_FILE = "data/app.log"
 
 # Regular expression to parse the log lines
 log_pattern = re.compile(
